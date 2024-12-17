@@ -1,0 +1,19 @@
+# MSSQL properties for accuity
+automation.database.accuity_mssql.backgroundCleanupPeriod=120000
+automation.database.accuity_mssql.validationTimeout=120000
+automation.database.accuity_mssql.expirationTimeout=600000
+automation.database.accuity_mssql.minIdle=5
+automation.database.accuity_mssql.maxIdle=20
+automation.database.accuity_mssql.schema=MY_MSSQL_SCHEMA
+automation.database.accuity_mssql.type=mssql
+automation.database.accuity_mssql.server=jdbc:sqlserver://localhost:1433;databaseName=MY_DATABASE
+
+# MSSQL properties for accuity_nns
+automation.database.accuity_nns_mssql.backgroundCleanupPeriod=120000
+automation.database.accuity_nns_mssql.validationTimeout=120000
+automation.database.accuity_nns_mssql.expirationTimeout=600000
+automation.database.accuity_nns_mssql.minIdle=5
+automation.database.accuity_nns_mssql.maxIdle=20
+automation.database.accuity_nns_mssql.schema=MY_NNS_SCHEMA
+automation.database.accuity_nns_mssql.type=mssql
+automation.database.accuity_nns_mssql.server=jdbc:sqlserver://localhost:1433;databaseName=MY_NNS_DATABASE
