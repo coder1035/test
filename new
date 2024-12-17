@@ -1,35 +1,58 @@
-@Bean(name = "dataSources")
-public Map<String, DataSource> dataSources() {
-    Map<String, DataSource> dataSources = new HashMap<>();
-    databaseProperties().forEach((key, properties) -> {
-        DataSource dataSource;
+package com.ms.itlnc.automation.config;
 
-        if ("db2".equalsIgnoreCase(properties.getType())) {
-            DB2DataSource db2DataSource = new DB2DataSource();
-            db2DataSource.setDatabaseServer(properties.getServer());
-            db2DataSource.setSchema(properties.getSchema());
-            db2DataSource.setKerberized(true);
-            db2DataSource.setBackgroundCleanupPeriod(properties.getBackgroundCleanupPeriod());
-            db2DataSource.setValidationTimeout(properties.getValidationTimeout());
-            db2DataSource.setPerformValidation(true);
-            db2DataSource.setExpirationTimeout(properties.getExpirationTimeout());
-            db2DataSource.setMinIdle(properties.getMinIdle());
-            db2DataSource.setMaxIdle(properties.getMaxIdle());
-            db2DataSource.setDriverClass(DB2DataSource.DEFAULT_DRIVER);
-            dataSource = db2DataSource;
-        } else if ("mssql".equalsIgnoreCase(properties.getType())) {
-            org.apache.commons.dbcp2.BasicDataSource mssqlDataSource = new org.apache.commons.dbcp2.BasicDataSource();
-            mssqlDataSource.setUrl(properties.getServer());
-            mssqlDataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            mssqlDataSource.setInitialSize(properties.getMinIdle());
-            mssqlDataSource.setMaxTotal(properties.getMaxIdle());
-            mssqlDataSource.setValidationQuery("SELECT 1");
-            mssqlDataSource.setMinEvictableIdleTimeMillis(properties.getExpirationTimeout());
-            dataSource = mssqlDataSource;
-        } else {
-            throw new IllegalArgumentException("Unsupported database type: " + properties.getType());
-        }
-        dataSources.put(key, dataSource);
-    });
-    return dataSources;
+import com.ibm.db2.jcc.DB2DataSource;
+import lombok.Getter;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+
+@Configuration
+@Getter
+public class DataSourceConfig {
+
+    @Bean(name = "databaseProperties")
+    @ConfigurationProperties(prefix = "automation.database")
+    public Map<String, DatabaseProperties> databaseProperties() {
+        return new HashMap<>();
+    }
+
+    @Bean(name = "dataSources")
+    public Map<String, DataSource> dataSources() {
+        Map<String, DataSource> dataSources = new HashMap<>();
+
+        databaseProperties().forEach((key, properties) -> {
+            DataSource dataSource;
+            if ("db2".equalsIgnoreCase(properties.getType())) {
+                DB2DataSource db2DataSource = new DB2DataSource();
+                db2DataSource.setDatabaseServer(properties.getServer());
+                db2DataSource.setSchema(properties.getSchema());
+                db2DataSource.setKerberized(true);
+                db2DataSource.setBackgroundCleanupPeriod(properties.getBackgroundCleanupPeriod());
+                db2DataSource.setValidationTimeout(properties.getValidationTimeout());
+                db2DataSource.setPerformValidation(true);
+                db2DataSource.setExpirationTimeout(properties.getExpirationTimeout());
+                db2DataSource.setMinIdle(properties.getMinIdle());
+                db2DataSource.setMaxIdle(properties.getMaxIdle());
+                db2DataSource.setDriverClass(DB2DataSource.DEFAULT_DRIVER);
+                dataSource = db2DataSource;
+            } else if ("mssql".equalsIgnoreCase(properties.getType())) {
+                DriverManagerDataSource mssqlDataSource = new DriverManagerDataSource();
+                mssqlDataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                mssqlDataSource.setUrl("jdbc:sqlserver://" + properties.getServer() + ";databaseName=" + properties.getSchema());
+                mssqlDataSource.setUsername("your-username"); // Replace with actual username
+                mssqlDataSource.setPassword("your-password"); // Replace with actual password
+                dataSource = mssqlDataSource;
+            } else {
+                throw new IllegalArgumentException("Unsupported database type: " + properties.getType());
+            }
+            dataSources.put(key, dataSource);
+        });
+
+        return dataSources;
+    }
 }
