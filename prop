@@ -17,3 +17,6 @@ automation.database.accuity_nns_mssql.maxIdle=20
 automation.database.accuity_nns_mssql.schema=MY_NNS_SCHEMA
 automation.database.accuity_nns_mssql.type=mssql
 automation.database.accuity_nns_mssql.server=jdbc:sqlserver://localhost:1433;databaseName=MY_NNS_DATABASE
+
+
+implementation 'com.microsoft.sqlserver:mssql-jdbc:12.2.0.jre11'
