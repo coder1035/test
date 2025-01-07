@@ -1,0 +1,14 @@
+String emailBodyHtml = String.format(
+    "<html>" +
+    "<body>" +
+    "<h3>Automated Testing Results</h3>" +
+    "<p><b>Total Tests:</b> %s</p>" +
+    "<p><b>Passed Tests:</b> %s</p>" +
+    "<p><b>Failed Tests:</b> %s</p>" +
+    "<p>For detailed information, please refer to the attached report.</p>" +
+    "<br/>" +
+    "<p>Best regards,<br/>Your Automation System</p>" +
+    "</body>" +
+    "</html>",
+    totalTests, passedTests, failedTests
+);
