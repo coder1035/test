@@ -46,3 +46,38 @@ String emailBodyHtml = String.format(
     "</html>",
     totalTests, passedTests, failedTests, skippedTests
 );
+
+
+String emailBodyHtml = String.format(
+    "<html>" +
+    "<body>" +
+    "<h3>Automated Testing Results</h3>" +
+    "<table style='border-collapse: collapse; width: 50%%;'>"+
+    "  <tr>" +
+    "    <th style='border: 1px solid black; padding: 8px; text-align: left;'>Test Type</th>" +
+    "    <th style='border: 1px solid black; padding: 8px; text-align: left;'>Count</th>" +
+    "  </tr>" +
+    "  <tr>" +
+    "    <td style='border: 1px solid black; padding: 8px;'>Total Tests</td>" +
+    "    <td style='border: 1px solid black; padding: 8px;'>%s</td>" +
+    "  </tr>" +
+    "  <tr>" +
+    "    <td style='border: 1px solid black; padding: 8px;'>Passed Tests</td>" +
+    "    <td style='border: 1px solid black; padding: 8px; color: green;'>%s</td>" +
+    "  </tr>" +
+    "  <tr>" +
+    "    <td style='border: 1px solid black; padding: 8px;'>Failed Tests</td>" +
+    "    <td style='border: 1px solid black; padding: 8px; color: red;'>%s</td>" +
+    "  </tr>" +
+    "  <tr>" +
+    "    <td style='border: 1px solid black; padding: 8px;'>Skipped Tests</td>" +
+    "    <td style='border: 1px solid black; padding: 8px; color: orange;'>%s</td>" +
+    "  </tr>" +
+    "</table>" +
+    "<p>For detailed information, please refer to the attached report.</p>" +
+    "<br/>" +
+    "<p>Best regards,<br/>Your Automation System</p>" +
+    "</body>" +
+    "</html>",
+    totalTests, passedTests, failedTests, skippedTests
+);
