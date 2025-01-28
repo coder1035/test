@@ -97,3 +97,27 @@ if (matcher.find()) { // If a match is found in the XPath
         ScreeningKeyUtil.addDerivedFieldToMap(derivedXPath, outputColumn.getName());
     }
 }
+
+// Define regex pattern to match field names like bicfi_1, bicfi_2, etc.
+String regexPattern = "bicfi_\\d+"; // Matches 'bicfi_' followed by a digit
+Pattern pattern = Pattern.compile(regexPattern);
+
+// Iterate through the LinkedHashMap and check if the key (XPath) matches
+for (Map.Entry<String, String> entry : fields.entrySet()) {
+    String xpathKey = entry.getKey(); // Get the XPath key
+    Matcher matcher = pattern.matcher(xpathKey);
+    
+    if (matcher.find()) { // If the XPath key matches the pattern
+        String matchedXPath = matcher.group(); // Extract the matched XPath part
+        
+        // Generate derived XPath using the extracted match
+        String derivedXPath = TranslatorUtils.getDerivedFieldXPath(matchedXPath, TranslatorUtils.BIC_COUNTRY_NAME_SUFFIX);
+        
+        // Validate and store the derived XPath
+        if (ScreeningKeyUtil.getHarmonizedField(derivedXPath) != null && 
+            !ScreeningKeyUtil.getHarmonizedField(derivedXPath).isEmpty()) {
+            ScreeningKeyUtil.addDerivedFieldToMap(derivedXPath, xpathKey);
+        }
+    }
+}
+
