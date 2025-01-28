@@ -20,3 +20,71 @@ automation.database.accuity_nns_mssql.server=jdbc:sqlserver://localhost:1433;dat
 
 
 implementation 'com.microsoft.sqlserver:mssql-jdbc:12.2.0.jre11'
+
+### **System Design Summary: Screening Request Processing Flow**  
+
+#### **Overview**  
+This design represents the architecture for handling screening requests received from an upstream source (ISS Pipex). It defines the interaction between various components, including a REST controller, databases, caching, and audit logging mechanisms. The goal is to efficiently process screening requests, determine the screening status of entities, and optimize performance using caching.  
+
+---
+
+#### **Components & Workflow**  
+
+1. **Upstream Source (ISS Pipex)**  
+   - Sends screening requests in JSON format to the **REST Controller**.  
+   - Receives a **screening response** in JSON format.  
+
+2. **REST Controller (Java/Spring Boot/Gradle)**  
+   - Acts as the core processing unit handling screening requests.  
+   - Queries **Accuity DB (DB2)** to check if a given **partyId** is actively screened.  
+   - Utilizes a **Cache** to store recently screened partyIds for quick lookups.  
+   - Stores screening results in the **Audit DB** for historical tracking.  
+
+3. **Accuity DB (DB2)**  
+   - Stores information on actively screened parties.  
+   - The REST Controller queries it with **partyId** to retrieve the screening status.  
+
+4. **Cache Mechanism**  
+   - Stores partyIds of actively screened entities to reduce DB calls.  
+   - Pre-loads partyIds screened in the **last one year** from the **Audit DB** for faster access.  
+
+5. **Audit DB (MSSQL/DB2/MongoDB/PostgreSQL)**  
+   - Maintains a historical record of all screening transactions.  
+   - New screening results are inserted here.  
+   - Used for extracting previously screened partyIds for caching.  
+
+---
+
+#### **Process Flow**  
+
+1. **Receive Request:** The upstream source (ISS Pipex) sends a screening request to the **REST Controller** in JSON format.  
+2. **Check Cache:** The system first checks if the **partyId** is present in the **Cache** (from past screenings).  
+   - If **found**, the result is returned immediately.  
+   - If **not found**, proceed to the next step.  
+3. **Query Accuity DB:** The REST Controller queries **Accuity DB (DB2)** with the **partyId** to determine the screening status.  
+4. **Store & Respond:**  
+   - The screening result is inserted into the **Audit DB**.  
+   - The response is sent back to the **upstream source**.  
+5. **Cache Management:**  
+   - The system periodically retrieves all **screened partyIds from the last one year** from the **Audit DB** and stores them in **Cache** for faster processing.  
+
+---
+
+#### **Key Features & Optimizations**  
+
+- **Caching Strategy:** Reduces frequent database queries by storing recent screening results.  
+- **Historical Data Utilization:** Past screenings (up to a year) are preloaded into the cache to improve performance.  
+- **Modular & Scalable Architecture:** The REST Controller decouples request processing, making it easy to scale.  
+- **Multi-Database Support:** The Audit DB supports multiple database technologies (MSSQL, DB2, MongoDB, PostgreSQL).  
+- **Asynchronous Processing Potential:** Screening responses can be enhanced using asynchronous messaging to improve efficiency.  
+
+---
+
+#### **Next Steps**  
+
+- **Define API Contracts:** Establish detailed request and response JSON structures.  
+- **Implement Caching Strategy:** Define caching policies (TTL, eviction rules, etc.).  
+- **Database Optimization:** Index critical fields for better query performance.  
+- **Security Considerations:** Ensure data encryption, access control, and audit logging mechanisms.  
+
+This summary can be used as a foundation for a detailed **design document**. Let me know if you need any modifications or additional details.
