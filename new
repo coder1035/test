@@ -80,3 +80,20 @@ public class DataSourceConfig {
         }
     }
 }
+
+String regexPattern = "bicfi\\d+"; // Regex to match bicfi1, bicfi2, etc.
+Pattern pattern = Pattern.compile(regexPattern);
+Matcher matcher = pattern.matcher(xpath);
+
+if (matcher.find()) { // If a match is found in the XPath
+    String matchedBicfi = matcher.group(); // Extract matched substring
+
+    // Create derived XPath by appending suffix
+    String derivedXPath = TranslatorUtils.getDerivedFieldXPath(xpath, TranslatorUtils.BIC_COUNTRY_NAME_SUFFIX);
+    
+    // Add derived XPath to screening key map
+    if (ScreeningKeyUtil.getHarmonizedField(derivedXPath) != null || 
+        !ScreeningKeyUtil.getHarmonizedField(derivedXPath).isEmpty()) {
+        ScreeningKeyUtil.addDerivedFieldToMap(derivedXPath, outputColumn.getName());
+    }
+}
