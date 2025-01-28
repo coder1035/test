@@ -107,6 +107,7 @@ for (Map.Entry<String, String> entry : fields.entrySet()) {
     String xpathKey = entry.getKey(); // Get the XPath key
     Matcher matcher = pattern.matcher(xpathKey);
     (?i)(?<=/)bicfi_\\d+(?=/|$)
+(?i)(?<=/)(bicfi_\\d+)(?=/|$)
     if (matcher.find()) { // If the XPath key matches the pattern
         String matchedXPath = matcher.group(); // Extract the matched XPath part
         
