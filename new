@@ -61,7 +61,10 @@ public class DataSourceConfig {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(xmlFile);
-
+            //1/1. check using regex exp if Dicfi_1/bicf1_2/bicfi_3 and so on is present in fields
+//1/2.if its present then iterate through all of them and create derived xpath
+//1/3. to create the derived path, take the substring from xpath like bicfi 1 -> -1, bicfi_2 -> _2 //4. append this value into the below line
+//derivedXpath = TranslatorUtils.getDerivedFieldpath(xpath, TranslatorUtils.BIC_COUNTRY_NAME_SUFFIX) +*_1"
             document.getDocumentElement().normalize();
 
             // Example: Extracting stats
