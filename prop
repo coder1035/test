@@ -27,7 +27,7 @@ implementation 'com.microsoft.sqlserver:mssql-jdbc:12.2.0.jre11'
 This design represents the architecture for handling screening requests received from an upstream source (ISS Pipex). It defines the interaction between various components, including a REST controller, databases, caching, and audit logging mechanisms. The goal is to efficiently process screening requests, determine the screening status of entities, and optimize performance using caching.  
 
 ---
-
+"(?<=Bicfi_).*?(?=_[0-9]+$)", "");
 #### **Components & Workflow**  
 
 1. **Upstream Source (ISS Pipex)**  
