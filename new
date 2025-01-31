@@ -121,4 +121,4 @@ for (Map.Entry<String, String> entry : fields.entrySet()) {
         }
     }
 }
-
+//this method takes a list of screening fields, extracts the original and harmonized names for each field, and returns a map containing these name pairs.
