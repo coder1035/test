@@ -1,0 +1,37 @@
+package com.example.gfscanc.service;
+
+import com.example.gfscanc.entity.AuditRecord;
+import com.example.gfscanc.entity.ScreeningRequest;
+import com.example.gfscanc.entity.ScreeningResponse;
+import com.example.gfscanc.repository.AcuityRepository;
+import com.example.gfscanc.repository.AuditRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
+
+@Service
+@RequiredArgsConstructor
+public class ScreeningService {
+    private final AcuityRepository acuityRepository;
+    private final AuditRepository auditRepository;
+
+    public ScreeningResponse processScreening(ScreeningRequest request) {
+        boolean isScreened = acuityRepository.checkScreeningStatus(request.getRecordId()).orElse(false);
+
+        // Save audit log
+        AuditRecord audit = new AuditRecord();
+        audit.setRecordId(request.getRecordId());
+        audit.setSourceSystem(request.getSourceSystemName());
+        audit.setScreened(isScreened);
+        audit.setTimestamp(LocalDateTime.now());
+        auditRepository.save(audit);
+
+        // Prepare response
+        ScreeningResponse response = new ScreeningResponse();
+        response.setRecordActivelyScreened(isScreened);
+        response.setWasRecordActivelyScreened(isScreened);
+        response.setErrorCode(null);
+        response.setErrorDescription(null);
+        return response;
+    }
+}
