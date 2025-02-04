@@ -1,0 +1,21 @@
+package com.example.gfscanc.controller;
+
+import com.example.gfscanc.entity.ScreeningRequest;
+import com.example.gfscanc.entity.ScreeningResponse;
+import com.example.gfscanc.service.ScreeningService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/screening")
+@RequiredArgsConstructor
+public class ScreeningController {
+    private final ScreeningService screeningService;
+
+    @PostMapping
+    public ResponseEntity<ScreeningResponse> screenParty(@RequestBody ScreeningRequest request) {
+        ScreeningResponse response = screeningService.processScreening(request);
+        return ResponseEntity.ok(response);
+    }
+}
