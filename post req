@@ -1,0 +1,12 @@
+POST http://localhost:8080/api/screening
+Content-Type: application/json
+{
+  "sourceSystemName": "pipex",
+  "bu": "ISG",
+  "purpose": "EDD",
+  "screeningRequestType": "Sanctions",
+  "requestedFor": "Screening",
+  "uid": "ISG_REG_0001",
+  "recordId": "BB812345678",
+  "recordType": "Party"
+}
