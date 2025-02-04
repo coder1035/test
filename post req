@@ -10,3 +10,42 @@ Content-Type: application/json
   "recordId": "BB812345678",
   "recordType": "Party"
 }
+valid.combinations=pipex:ISG, abcCorp:FIN, xyzBank:OPS
+package com.example.gfscanc.config;
+
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.Map;
+
+@Component
+@Getter
+public class ValidCombinationsConfig {
+
+    @Value("${valid.combinations}")
+    private String validCombinations;
+
+    private final Map<String, String> validCombinationsMap = new HashMap<>();
+
+    @PostConstruct
+    public void init() {
+        if (validCombinations != null) {
+            String[] pairs = validCombinations.split(",");
+            for (String pair : pairs) {
+                String[] keyValue = pair.trim().split(":");
+                if (keyValue.length == 2) {
+                    validCombinationsMap.put(keyValue[0].trim(), keyValue[1].trim());
+                }
+            }
+        }
+    }
+
+    public boolean isValidCombination(String sourceSystemName, String bu) {
+        return validCombinationsMap.containsKey(sourceSystemName) &&
+                validCombinationsMap.get(sourceSystemName).equals(bu);
+    }
+}
+
