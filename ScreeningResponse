@@ -1,0 +1,11 @@
+package com.example.gfscanc.entity;
+
+import lombok.Data;
+
+@Data
+public class ScreeningResponse {
+    private String errorCode;
+    private String errorDescription;
+    private boolean isRecordActivelyScreened;
+    private boolean wasRecordActivelyScreened;
+}
