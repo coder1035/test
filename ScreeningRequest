@@ -1,0 +1,15 @@
+package com.example.gfscanc.entity;
+
+import lombok.Data;
+
+@Data
+public class ScreeningRequest {
+    private String sourceSystemName;
+    private String bu;
+    private String purpose;
+    private String screeningRequestType;
+    private String requestedFor;
+    private String uid;
+    private String recordId;
+    private String recordType;
+}
