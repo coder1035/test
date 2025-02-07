@@ -41,3 +41,15 @@ if (!results.isEmpty()) {
 } else {
     System.out.println("Party ID is not actively screened.");
 }
+
+
+SELECT m.*  
+FROM ASM.CDM_MASTER_CUST_DATA m  
+JOIN (
+    SELECT MAX(version_id) AS max_version_id  
+    FROM ASM.CDM_CUST_DATA_DETAIL  
+    WHERE field = 'PARTY1_ID'  
+    AND field_value = :partyId  
+) d ON m.versionid = d.max_version_id  
+WHERE m.DATASET_ID IN (1301, 1302)  
+AND m.STATUS = 'A';
