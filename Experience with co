@@ -1,0 +1,25 @@
+My Experience Using GitHub Copilot: A Game-Changer for API Development
+
+Recently, I had the chance to put GitHub Copilot to the test while building a Spring Boot-based REST API connected to a DB2 database. The goal was to create an efficient, secure, and auditable API, and with Copilot's help, I was able to complete the project in just 5 days — cutting the estimated development time in half.
+
+How GitHub Copilot Helped
+
+Copilot was a huge asset throughout the project. It generated nearly 80% of the code, from the basic structure to complex logic. It assisted with everything from creating controller classes and setting up security configurations to writing JUnit tests. While there were occasional challenges with complex logic (which required a few prompt adjustments), Copilot’s overall output was spot-on for most tasks.
+
+One of the standout features was how it helped me discover new syntax and practices I hadn’t encountered before. It not only sped up the development process but also helped me learn new ways to approach coding challenges.
+
+The Time-Saving Benefits
+
+The project was initially scoped for 12 days of work, but with Copilot’s assistance, I completed it in just 5 days. This wasn’t just about speeding up the code-writing process but also about eliminating the need to spend hours looking up syntax and configuration patterns. The result? A faster, more efficient development cycle.
+
+What Could Improve
+
+While Copilot is an incredibly helpful tool, it still requires some fine-tuning for complex logic. There were times when I had to adjust prompts to avoid conflicts between different conditions in the same request. But once I figured out the right approach, Copilot delivered exactly what I needed.
+
+The Bottom Line
+
+Overall, I was impressed with how much Copilot helped me accomplish. I felt confident about using its suggestions in production, and I didn’t worry about licensing or copyright concerns because the code was generic and based on well-known patterns. Going forward, I plan to use Copilot regularly as part of my development process, and I would recommend it to any developer, regardless of experience level.
+
+Tips for Maximizing Copilot’s Potential
+
+The most important tip I can offer is to improve your prompts. Clear, specific instructions lead to better output. The more precise your requests, the better the code Copilot will generate for you. Treat it like a coding buddy and guide it along the way!
