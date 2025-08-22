@@ -1,0 +1,218 @@
+Problem Statement
+
+You are tasked with building an advanced slot machine game with 3 reels. Each reel spins and shows one symbol from the set:
+['A', 'B', 'C', 'D', 'E', '*']
+
+where * is a wildcard symbol.
+
+⸻
+
+Rules
+	1.	Equal Probability
+	•	Each symbol (A, B, C, D, E, *) is equally likely to appear on a reel.
+	2.	Scoring Rules
+	•	If all 3 symbols match → Player wins 100 + 3 × base_value.
+	•	If exactly 2 symbols match → Player wins 10 + 2 × base_value.
+	•	If all 3 symbols are different → Player wins sum(base_values) % 10.
+	•	Wildcard * can substitute for any symbol.
+Base values of symbols:
+	•	A = 5, B = 10, C = 15, D = 20, E = 25.
+	•	* has no base value, but acts as a joker.
+	3.	Special Jackpot Rules
+	•	Sequence A, B, C (in exact order) → 500 points.
+	•	Sequence E, E, E → 1000 points.
+	•	If a jackpot condition applies, ignore other rules.
+	4.	Game History + Bonus Spin
+	•	Keep track of the last 3 spins in a queue.
+	•	If the player scores 0 points for 3 consecutive spins, they earn 1 free bonus spin.
+
+⸻
+
+Input Format
+	•	First line: integer N → the number of spins the player initially gets.
+
+⸻
+
+Output Format
+	•	For each spin, print:
+
+Spin k: [X, Y, Z] → SCORE points
+
+where k is the spin number (including bonus spins).
+
+After all spins, print:
+Total Score: S
+Highest Spin Score: H
+
+Constraints
+	•	1 ≤ N ≤ 10^5
+	•	Randomness must be simulated uniformly across all symbols.
+	•	The solution should be efficient in handling up to 10^5 spins.
+
+input:
+5
+
+output:
+Spin 1: [A, *, A] → 115 points  
+Spin 2: [C, C, D] → 40 points  
+Spin 3: [A, B, C] → JACKPOT 500 points  
+Spin 4: [D, E, C] → 0 points  
+Spin 5: [D, D, D] → 160 points  
+
+Total Score: 815  
+Highest Spin Score: 500
+
+Explanation of Output
+	•	*Spin 1: [A, , A] → 115 points
+	•	* acts as a wildcard → effectively [A, A, A].
+	•	Rule: all 3 match → 100 + 3 × base_value(A) = 100 + 3×5 = 115.
+	•	Spin 2: [C, C, D] → 40 points
+	•	Two symbols match (C, C).
+	•	Rule: 2 match → 10 + 2 × base_value(C) = 10 + 30 = 40.
+	•	Spin 3: [A, B, C] → JACKPOT 500 points
+	•	Exact ordered sequence A, B, C.
+	•	Jackpot rule overrides normal scoring.
+	•	Spin 4: [D, E, C] → 0 points
+	•	All different → sum(base_values) % 10.
+	•	20 + 25 + 15 = 60.
+	•	60 % 10 = 0.
+	•	Spin 5: [D, D, D] → 160 points
+	•	All 3 match (D).
+	•	Rule: 100 + 3 × base_value(D) = 100 + 60 = 160.
+	•	Total Score = 115 + 40 + 500 + 0 + 160 = 815
+	•	Highest Spin Score = 500 (Spin 3)
+
+import java.util.*;
+
+public class AdvancedSlotMachine {
+
+    // Base values for symbols
+    static Map<Character, Integer> baseValues = new HashMap<>();
+    static {
+        baseValues.put('A', 5);
+        baseValues.put('B', 10);
+        baseValues.put('C', 15);
+        baseValues.put('D', 20);
+        baseValues.put('E', 25);
+        // '*' has no base value
+    }
+
+    // All possible symbols
+    static char[] symbols = {'A', 'B', 'C', 'D', 'E', '*'};
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt(); // number of initial spins
+        sc.close();
+
+        Random rand = new Random();
+        Queue<Integer> history = new LinkedList<>(); // store last 3 spin scores
+
+        int totalScore = 0;
+        int highestScore = 0;
+        int spinCount = 0;
+
+        while (N > 0) {
+            spinCount++;
+
+            // Generate 3 random symbols
+            char[] reels = new char[3];
+            for (int i = 0; i < 3; i++) {
+                reels[i] = symbols[rand.nextInt(symbols.length)];
+            }
+
+            // Calculate score
+            int score = calculateScore(reels);
+
+            // Print spin result
+            System.out.println("Spin " + spinCount + ": " + Arrays.toString(reels) +
+                               (isJackpot(reels) ? " → JACKPOT " : " → ") + score + " points");
+
+            // Update stats
+            totalScore += score;
+            highestScore = Math.max(highestScore, score);
+
+            // Manage history
+            history.add(score);
+            if (history.size() > 3) history.poll();
+
+            // Check for bonus spin
+            if (history.size() == 3 && history.stream().allMatch(s -> s == 0)) {
+                N++; // add bonus spin
+                history.clear(); // reset after bonus
+            }
+
+            N--; // reduce one spin
+        }
+
+        // Final result
+        System.out.println("\nTotal Score: " + totalScore);
+        System.out.println("Highest Spin Score: " + highestScore);
+    }
+
+    // Calculate score based on rules
+    private static int calculateScore(char[] reels) {
+        // Jackpot check
+        if (isJackpot(reels)) {
+            if (reels[0] == 'A' && reels[1] == 'B' && reels[2] == 'C') return 500;
+            if (reels[0] == 'E' && reels[1] == 'E' && reels[2] == 'E') return 1000;
+        }
+
+        // Handle wildcards by trying substitutions
+        // For simplicity: replace '*' with best possible symbol for max score
+        if (containsWildcard(reels)) {
+            return bestWildcardScore(reels);
+        }
+
+        // Normal scoring
+        return normalScore(reels);
+    }
+
+    // Check jackpot
+    private static boolean isJackpot(char[] reels) {
+        return (reels[0] == 'A' && reels[1] == 'B' && reels[2] == 'C') ||
+               (reels[0] == 'E' && reels[1] == 'E' && reels[2] == 'E');
+    }
+
+    // Check wildcard existence
+    private static boolean containsWildcard(char[] reels) {
+        for (char c : reels) if (c == '*') return true;
+        return false;
+    }
+
+    // Replace wildcard with best substitution
+    private static int bestWildcardScore(char[] reels) {
+        int best = 0;
+        for (char s : baseValues.keySet()) { // try replacing with A–E
+            char[] copy = reels.clone();
+            for (int i = 0; i < 3; i++) {
+                if (copy[i] == '*') copy[i] = s;
+            }
+            best = Math.max(best, normalScore(copy));
+        }
+        return best;
+    }
+
+    // Calculate score without wildcards/jackpot
+    private static int normalScore(char[] reels) {
+        // Count frequencies
+        Map<Character, Integer> freq = new HashMap<>();
+        for (char c : reels) freq.put(c, freq.getOrDefault(c, 0) + 1);
+
+        if (freq.size() == 1) { // all same
+            char sym = reels[0];
+            return 100 + 3 * baseValues.get(sym);
+        }
+        if (freq.size() == 2) { // two same
+            char match = ' ';
+            for (char c : freq.keySet()) {
+                if (freq.get(c) == 2) match = c;
+            }
+            return 10 + 2 * baseValues.get(match);
+        }
+        // all different
+        int sum = 0;
+        for (char c : reels) sum += baseValues.get(c);
+        return sum % 10;
+    }
+}
