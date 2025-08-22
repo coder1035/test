@@ -1,0 +1,26 @@
+2. Slot Machine Problem
+
+👉 Simulation + Probability
+
+Problem Statement:
+You are building a simple slot machine game with 3 reels. Each reel shows one symbol when spun, chosen randomly from a set of symbols:
+['A', 'B', 'C', 'D', 'E'].
+
+Rules:
+	•	If all 3 symbols match → Player wins 100 points.
+	•	If 2 symbols match → Player wins 10 points.
+	•	Otherwise → Player wins 0 points.
+
+Write a program that:
+	1.	Simulates a spin of the slot machine.
+	2.	Prints the 3 symbols obtained.
+	3.	Calculates the score based on the rules.
+
+Spin Result: [A, A, A]
+Score: 100
+
+Spin Result: [B, B, C]
+Score: 10
+
+Spin Result: [C, D, E]
+Score: 0
