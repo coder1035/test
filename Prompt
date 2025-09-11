@@ -1,0 +1,111 @@
+Transform my current Angular UI into a modern, professional-looking web application. Keep the existing functionality (Validate camt.054 XML, Metrics, Rules, dropdowns, and validation output), but completely revamp the design.
+
+Requirements:
+	1.	Use Angular Material or TailwindCSS (whichever fits better) for styling and components.
+	2.	Add a responsive layout with a clean navigation bar (logo + tabs for Validate, Metrics, Rules).
+	3.	Replace plain dropdowns and textboxes with styled Angular Material components (mat-select, mat-input, mat-card).
+	4.	Show cards/sections for Data Quality Rules and Validation Metrics instead of raw text.
+	5.	Use data tables (Angular Material Table) for error counts with sortable columns.
+	6.	Use charts (e.g., ngx-charts or Chart.js) to display error rates and validation metrics visually.
+	7.	Apply a professional color theme (dark blue / indigo primary, with light gray background and accent colors).
+	8.	Add subtle shadows, rounded corners, and spacing for a modern “dashboard” feel.
+	9.	Make everything mobile-friendly and responsive.
+	10.	Keep code modular (separate components for Validate, Metrics, Rules).
+
+Final output should look like a corporate dashboard — elegant, clean, and easy to read.
+ app.component.html (layout skeleton)
+<mat-toolbar color="primary" class="app-toolbar">
+  <span class="logo">Data Quality UI</span>
+  <span class="spacer"></span>
+  <button mat-button routerLink="/validate">Validate</button>
+  <button mat-button routerLink="/metrics">Metrics</button>
+  <button mat-button routerLink="/rules">Rules</button>
+</mat-toolbar>
+
+<div class="app-container">
+  <router-outlet></router-outlet>
+</div>
+
+styles.css (global styles)
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: #f5f6fa;
+}
+
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.app-container {
+  padding: 20px;
+}
+
+Example rules.component.html
+<mat-card>
+  <mat-card-title>Data Quality Rules</mat-card-title>
+  <mat-card-content>
+    <mat-form-field appearance="outline">
+      <mat-label>Show rule details for</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let option of ruleOptions" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-list>
+      <mat-list-item *ngFor="let rule of rules">
+        <mat-icon matListIcon>rule</mat-icon>
+        <h4 matLine>{{ rule.name }}</h4>
+        <p matLine>{{ rule.description }}</p>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
+
+Example metrics.component.html
+<mat-card>
+  <mat-card-title>Validation Metrics</mat-card-title>
+  <mat-card-content>
+    <div class="metrics-summary">
+      <mat-chip color="primary" selected>Total Validated: {{ totalValidated }}</mat-chip>
+      <mat-chip color="warn" selected>Total Failed: {{ totalFailed }}</mat-chip>
+      <mat-chip color="accent" selected>Error Rate: {{ errorRate }}%</mat-chip>
+    </div>
+
+    <mat-table [dataSource]="errorData" class="mat-elevation-z2">
+      <ng-container matColumnDef="rule">
+        <mat-header-cell *matHeaderCellDef> Rule </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.rule}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="count">
+        <mat-header-cell *matHeaderCellDef> Count </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.count}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="['rule', 'count']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['rule', 'count'];"></mat-row>
+    </mat-table>
+  </mat-card-content>
+</mat-card>
+
+
+Example validate.component.html
+<mat-card>
+  <mat-card-title>Validate camt.054 XML</mat-card-title>
+  <mat-card-content>
+    <mat-form-field appearance="outline" class="full-width">
+      <textarea matInput placeholder="Paste XML here" rows="10"></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="primary">Validate</button>
+  </mat-card-content>
+</mat-card>
