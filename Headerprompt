@@ -1,0 +1,17 @@
+Here’s a clear prompt you can give to Copilot to improve the styling of the validation results so that they display full screen and look better:
+
+***
+
+Update the styling of the "Validation Result" section in my Angular Data Quality UI. Currently, the results appear in a narrow strip in the center; I want the results section (including errors table and all messages) to span the full width of the browser. Please do the following:
+- Make the validation results section (including the error table) expand to use the full available horizontal space on the page.
+- Update the table design for better readability: use alternating row colors, larger and bolder header fonts, and clear borders.
+- Add some padding and spacing around the table and results for a comfortable, uncluttered look.
+- Ensure column widths adjust for content and are readable, with no unnecessary truncation.
+- All changes should be responsive for different screen sizes.
+- Provide updated CSS and any necessary Angular HTML/template changes.
+
+***
+
+This prompt will help Copilot understand exactly how you want the validation results section to look and behave.
+
+Sources
