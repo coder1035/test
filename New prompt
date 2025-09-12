@@ -1,0 +1,21 @@
+Here’s a prompt you can give to Copilot (or any code assistant) to update the font and styling of your Data Quality UI website:
+
+***
+
+Update the font and overall styling of my Angular Data Quality UI web application to make it look more modern and visually appealing. Please do the following:
+- Change the default font to "Roboto", "Segoe UI", or a modern, clean sans-serif font throughout the site.
+- Update button styles to have rounded corners, subtle hover effects, and a more prominent "Validate" button in a primary color.
+- Add subtle shadow to the main content panels (like where the rules dropdown and metrics appear).
+- Ensure headers use a bold, larger font size and clear spacing above and below.
+- Update drop-down/select styles to look modern and consistent with the new overall design.
+- Use a light neutral background color (e.g., #f7f9fa) for the page behind the content panels.
+- Maintain professional branding, using blue accents where appropriate, but minimize dark blue background coverage for a lighter feel.
+- Ensure all changes work well on both desktop and laptop screen sizes.
+
+Please provide the updated CSS and example Angular component changes as needed.
+
+***
+
+This prompt clearly outlines modern design expectations, desired fonts, and attention to core UI elements while being actionable for an AI assistant or collaborator.
+
+Sources
