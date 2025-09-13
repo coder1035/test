@@ -1,0 +1,30 @@
+Create a React app layout with a top navigation bar and sidebar for navigation. 
+Use React Router with three pages: 
+1. XML Validation 
+2. Metrics Dashboard 
+3. Rules Viewer. 
+The UI should be professional, business-style, with a clean design, good spacing, and responsive layout. 
+Use a modern component library like Material-UI or Ant Design for styling.
+
+
+Build a page called "XML Validation". 
+Add a text area for XML input and a "Validate" button. 
+On clicking validate, send a POST request to http://localhost:8082/validate-camt054 with the XML as request body. 
+Display the validation response in a structured, readable format using a table or expandable panels. 
+Highlight errors in red and show rule names, messages, and field paths clearly. 
+Ensure the design looks professional and readable.
+
+
+Create a page called "Metrics Dashboard". 
+Fetch data from GET /metrics endpoint. 
+Display error counts by rule and field using bar charts and pie charts. 
+Show summary values like totalValidated, totalFailed, and errorRate at the top in professional-looking statistic cards. 
+Use a charting library like Recharts or Chart.js with a clean business dashboard design.
+
+Create a page called "Rules Viewer". 
+Add a dropdown with options: "all rules", "name", "address", "currency", "bic". 
+If "all rules" is selected, fetch from /rules endpoint. 
+If a specific option is selected, fetch from /rules/<selector>. 
+Display the rules in a well-formatted table with columns for rule name, explanation, and details. 
+Make the UI clean, with good spacing, so business users can easily read rules.
+
