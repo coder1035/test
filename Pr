@@ -1,0 +1,15 @@
+Redesign my validate.component.html so that the validation results look clean, professional, and easy to read.
+
+Current issues:
+	•	Results are aligned to the left and look cramped.
+	•	Table is plain and not styled.
+	•	No visual separation between input area and results.
+
+Requirements:
+	1.	Wrap the input form and validation results in Angular Material cards (mat-card) with shadows and padding.
+	2.	Make the XML input textarea full width with mat-form-field appearance="outline".
+	3.	Add a “Validate” button aligned to the right, styled with Angular Material.
+	4.	Show results in a Material Table (mat-table) with proper columns (Field, Rule, Message, Explanation).
+	5.	Center the results card on the page (max-width: 900px; margin: auto;).
+	6.	Add an error title in red when errors exist, and show a success chip (mat-chip) when there are no errors.
+	7.	Make the whole page responsive and visually balanced.
