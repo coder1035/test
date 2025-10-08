@@ -1,0 +1,10 @@
+Update my React components and CSS so the website layout is fully responsive.
+Ensure it looks good and scales correctly on mobile, tablet, laptop, and large desktop screens.
+Use CSS Flexbox or Grid where appropriate, avoid fixed widths or heights, and add responsive breakpoints using media queries or a CSS framework if needed (like Tailwind or Bootstrap).
+Also, make text, buttons, and tables adjust properly for smaller screens without horizontal scrolling.
+
+Modify the layout so the website utilizes the full available width and height of the screen.
+Remove unnecessary padding or margins that restrict the layout width.
+Ensure the content adjusts dynamically to fill the viewport without leaving large empty areas on the sides or bottom.
+Use flexible containers (like display: flex or grid) and width: 100% / height: 100vh where needed.
+The layout should feel balanced and centered even on ultrawide screens.
